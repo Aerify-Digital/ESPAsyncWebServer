@@ -21,9 +21,15 @@
 #include "ESPAsyncWebServer.h"
 #include "WebHandlerImpl.h"
 
+#if defined (ESP32)
+#define SERVER_FREE_HEAP_LEVEL_CRITICAL (5*1024)
+#define SERVER_FREE_HEAP_LEVEL_HIGH (11*1024)
+#define MAX_NUM_OF_HTTP_REQUESTS 5
+#else
 #define SERVER_FREE_HEAP_LEVEL_CRITICAL (5*1024)
 #define SERVER_FREE_HEAP_LEVEL_HIGH (7*1024)
 #define MAX_NUM_OF_HTTP_REQUESTS 3
+#endif
 
 bool ON_STA_FILTER(AsyncWebServerRequest *request) {
   return WiFi.localIP() == request->client()->localIP();
